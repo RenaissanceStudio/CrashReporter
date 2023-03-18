@@ -1,10 +1,14 @@
 package com.balsikandar.crashreporter.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.FileProvider;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -78,7 +82,16 @@ public class LogMessageActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("*/*");
         intent.putExtra(Intent.EXTRA_TEXT, appInfo.getText().toString());
-        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(filePath)));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            File file = new File(filePath);
+            Context context = getApplicationContext();
+            Uri imageUri = FileProvider.getUriForFile(context, context.getPackageName()+".fileprovider", file);
+            intent.putExtra(Intent.EXTRA_STREAM, imageUri);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        } else {
+            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(filePath)));
+        }
         startActivity(Intent.createChooser(intent, "Share via"));
     }
 }

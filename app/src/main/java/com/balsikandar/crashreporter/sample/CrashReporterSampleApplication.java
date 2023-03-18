@@ -18,7 +18,7 @@ public class CrashReporterSampleApplication extends Application {
         super.onCreate();
 
         if (BuildConfig.DEBUG) {
-            //initialise reporter with external path
+            //initialise reporter with external path.xml
             CrashReporter.initialize(this);
         }
     }

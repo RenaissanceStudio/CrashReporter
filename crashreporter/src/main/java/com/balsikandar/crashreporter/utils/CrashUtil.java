@@ -6,8 +6,10 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
+
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -104,7 +106,7 @@ public class CrashUtil {
             intent.putExtra(Constants.LANDING, isCrash);
             intent.setAction(Long.toString(System.currentTimeMillis()));
 
-            final int flag =  Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE : PendingIntent.FLAG_UPDATE_CURRENT;
+            final int flag = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE : PendingIntent.FLAG_UPDATE_CURRENT;
 
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, flag);
             builder.setContentIntent(pendingIntent);
@@ -145,6 +147,7 @@ public class CrashUtil {
     }
 
     public static String getDefaultPath() {
+        // External file dir : sdcard/Android/data/pkg-name/crashReports/
         String defaultPath = CrashReporter.getContext().getExternalFilesDir(null).getAbsolutePath()
                 + File.separator + Constants.CRASH_REPORT_DIR;
 
