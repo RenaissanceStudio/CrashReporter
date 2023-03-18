@@ -3,6 +3,9 @@
     package="com.balsikandar.crashreporter">
 
 
+    <uses-permission
+        android:name="android.permission.GET_ACCOUNTS"
+        android:maxSdkVersion="22" />
     <application
         android:supportsRtl="true">
 
