@@ -16,6 +16,30 @@ Here is an [article](https://blog.mindorks.com/android-debugging-crashreporter-o
 
 While developing features we get crashes and if device is not connected to logcat we miss the crash log. In worst case scenario we might not be able to reproduce the crash and endup wasting effort. This library captures all unhandled crashes and saves them locally on device. I found a problem with other libraries that they capture crashes and then uploads them to server and sometimes few crashes aren't logged to server. That's the purpose of this library use it as a debug feature to capture crashes locally and immediately.
 
+### Note ⚠️
+
+Please use [your personal GitHub token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) to integrate the library with version `1.2.0+` due to lack of maintenance on balsikandar's [original repo](https://github.com/MindorksOpenSource/CrashReporter).
+
+```
+repositories {
+    maven {
+        name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/rayworks/crashreporter")
+        credentials {
+            username = "${your-github-username}"
+            password = "${your-github-token}"
+        }
+    }
+}
+
+...
+
+dependencies {
+    debugImplementation 'com.balsikandar.android:crashreporter:1.2.0'
+}
+
+```
+
 ### Run the sample
 <img src=https://github.com/balsikandar/CrashReporter/blob/master/assets/crash_reporter_work_flow.gif >
 
@@ -28,19 +52,20 @@ While developing features we get crashes and if device is not connected to logca
 - Share Instantly crash log with your team with other device data.
 
 ### Crash reporter doesn't takes any permission or root access
+
 ### Using Crash Reporter Library in your application
 add below dependency in your app's gradle
 ```
-compile 'com.balsikandar.android:crashreporter:1.1.0'
+implementation 'com.balsikandar.android:crashreporter:1.2.0'
 ```
 ### If you only want to use Crash reporter in debug builds only add
 ```
-debugCompile 'com.balsikandar.android:crashreporter:1.1.0'
+debugImplementation 'com.balsikandar.android:crashreporter:1.2.0'
 ```
 Note : If you get error like this "no resource identifier found for attribute 'alpha' in package 'android'" use below dependency. This may happen due to two different versions of design support library as CrashReporter also uses design support library internally.
 
 ```
-debugCompile('com.balsikandar.android:crashreporter:1.1.0') {
+debugImplementation('com.balsikandar.android:crashreporter:1.2.0') {
     exclude group: 'com.android.support', module: 'design'
 }
 ```
@@ -101,6 +126,7 @@ Identify crashes and categorise them in groups
 ### License
 
    ```
+   Copyright (C) 2023 rayworks
    Copyright (C) 2016 Bal Sikandar
    Copyright (C) 2011 Android Open Source Project
 
