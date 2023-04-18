@@ -1,0 +1,42 @@
+apply plugin: 'maven-publish'
+
+def group_name = "com.balsikandar.android"
+def module_name = "crashreporter"
+def lib_version = '1.2.0'
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+
+                groupId group_name
+
+                artifactId module_name
+                version lib_version
+            }
+
+            debug(MavenPublication) {
+                from components.debug
+
+                groupId group_name
+
+                artifactId module_name
+                version lib_version
+            }
+        }
+
+        repositories {
+            maven {
+                name = "GitHubPackages"
+
+                url = uri("https://maven.pkg.github.com/rayworks/CrashReporter")
+
+                credentials {
+                    username = "${githubUserName}"
+                    password = "${githubToken}"
+                }
+            }
+        }
+    }
+}
